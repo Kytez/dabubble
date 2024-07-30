@@ -1,0 +1,35 @@
+<div class="channelParticipants-container">
+    <div class="title">
+      <h2>Mitglieder</h2>
+    </div>
+
+    <div *ngIf="channelParticipants">
+
+        <!-- current User -->
+        <div class="currentUser">
+            <div class="profileImg-and-onlineStatus">
+                <img class="profile-img" src="{{ currentUser.imageUrl }}">
+                <img class="online-status" [class.online]="currentUser.onlineStatus === 'online'"
+                 [class.offline]="currentUser.onlineStatus === 'offline'">
+              </div>
+              <span> {{ currentUser.name }}  (Du) </span>
+        </div>
+
+        <!-- other channel participants -->
+        @for(participant of channelParticipants; track participant.imageUrl) {
+            <div class="participant" (click)="showProfile(participant)">
+                <div class="profileImg-and-onlineStatus">
+                  <img class="profile-img" src="{{ participant.imageUrl }}">
+                  <img class="online-status" [class.online]="participant.onlineStatus === 'online'"
+                   [class.offline]="participant.onlineStatus === 'offline'">
+                </div>
+                <span> {{ participant.name }} </span>
+            </div>
+        }
+
+    </div>
+    <div class="addUser-container" (click)="openAddUsersDialog()">
+        <img src="assets/img/add_user.png">
+        <button>Teilnehmer hinzufügen</button>
+    </div>
+</div>

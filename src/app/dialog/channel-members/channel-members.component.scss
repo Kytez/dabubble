@@ -1,0 +1,230 @@
+@import '../../../mixin.scss';
+
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h2 {
+  @include font-size-weight-color($fs: 24px, $fw: 700)
+}
+
+h3 {
+  @include font-size-weight-color($fw: 700);
+
+  span {
+    @include font-size-weight-color($cl: #686868 !important)
+  }
+}
+
+input {
+  border: unset;
+  outline: none;
+
+  &:focus {
+    border-color: #444DF2 !important;
+  }
+}
+
+.add-channel-card {
+  box-shadow: 0px 6px 10px 0px #00000033;
+  max-width: 872px;
+  min-height: 294px;
+  border-radius: 30px;
+  background-color: #FFFFFF;
+  padding: 40px;
+  @include flex-align-justify($ai: start, $jc: space-between);
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 1001;
+
+  span {
+    @include font-size-weight-color();
+  }
+
+  div {
+    width: 100%;
+  }
+
+  .close-img {
+    position: absolute;
+    right: 32px;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+  }
+}
+
+::ng-deep .mat-mdc-menu-item-text {
+  margin: 0;
+  @include flex-align-justify($jc: flex-start);
+  gap: 8px;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  input {
+    width: 100%;
+    padding: 18px 40px;
+    border: 1px solid #ADB0D9;
+    border-radius: 40px;
+    @include font-size-weight-color($cl: #686868)
+  }
+}
+
+.btn-section {
+  display: flex;
+  justify-content: right;
+
+  button {
+    border-radius: 25px;
+    border: none;
+    padding: 12px 25px;
+    @include font-size-weight-color($fw: 700, $cl: #FFFFFF);
+  }
+}
+
+.btn-enabled {
+  background-color: $purple;
+
+  &:hover {
+    background-color: $purpleHover;
+    cursor: pointer;
+  }
+}
+
+.btn-disabled {
+  background-color: $deactivated;
+}
+
+.choose-member {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input {
+    width: 100%;
+  }
+}
+
+::ng-deep .mat-mdc-dialog-container {
+  --mdc-dialog-container-shape: 30px;
+}
+
+::ng-deep .mat-accent,
+::ng-deep .mat-mdc-radio-button.mat-accent,
+::ng-deep .mat-radio {
+  --mdc-radio-selected-focus-icon-color: none;
+  --mdc-radio-selected-hover-icon-color: #444DF2;
+  --mdc-radio-selected-icon-color: #444DF2;
+  --mdc-radio-selected-pressed-icon-color: none;
+  --mat-radio-ripple-color: none;
+  --mat-radio-checked-ripple-color: none;
+  --mat-radio-disabled-label-color: none;
+  --mdc-circular-progress-active-indicator-color: none;
+  --mdc-radio-disabled-selected-icon-color: none;
+  --mdc-radio-disabled-unselected-icon-color: none;
+  --mdc-radio-unselected-hover-icon-color: #444DF2;
+  --mdc-radio-unselected-icon-color: #ADB0D9;
+  --mdc-radio-unselected-pressed-icon-color: none;
+}
+
+.checkbox-inputs {
+  display: flex;
+  flex-direction: column;
+
+  p {
+    font-size: 18px;
+    margin: 0;
+
+    span {
+      font-size: 18px;
+      color: $fontHover;
+    }
+  }
+}
+
+::ng-deep mat-chip-row,
+.mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) {
+  display: flex;
+  background-color: $backgroundHover;
+  min-width: 206px;
+  height: 40px;
+  border-radius: 35px;
+}
+
+::ng-deep .mdc-evolution-chip__text-label,
+.mat-mdc-chip-action-label {
+  width: 100%;
+}
+
+::ng-deep .mdc-list-item__primary-text {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.chip-subcontainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  p {
+    margin: 0;
+    font-size: 18px;
+  }
+}
+
+.user-chip-img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+
+@media (max-width: 650px) {
+  ::ng-deep .cdk-overlay-pane.mat-mdc-dialog-panel {
+    max-width: none;
+    height: 90%;
+    min-height: 460px;
+    width: 100%;
+  }
+
+  .add-channel-card {
+    height: 100%;
+    min-height: 460px;
+    max-width: none;
+    border-radius: 0;
+    padding: 40px 20px;
+  }
+
+  ::ng-deep .mat-mdc-dialog-container {
+    --mdc-dialog-container-shape: 30px 30px 0 0 !important;
+  }
+
+  ::ng-deep .cdk-global-overlay-wrapper {
+    align-items: flex-end !important;
+  }
+
+  .checkbox-inputs {
+
+    p {
+      font-size: 16px;
+    }
+  }
+
+  .input-section {
+    input {
+      font-size: 16px;
+      height: 50px;
+    }
+  }
+
+  .chips-container {
+    scale: 0.7;
+  }
+}

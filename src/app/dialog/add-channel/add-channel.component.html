@@ -1,0 +1,38 @@
+<div class="add-channel-card">
+    <img src="./assets/img/close.png" (click)="resetForm()">
+    <div>
+        <h2 class="project-font">Channel erstellen</h2>
+    </div>
+    <span>
+        Channels dienen deinem Team zur Kommunikation.
+        Am besten sollten sie themenbezogen sein #marketing zum
+        Beispiel.
+    </span>
+    <div class="input-section">
+        <h3 class="project-font">Channel-Name</h3>
+        <div class="input-channel-name">
+            <img src="./assets/img/tag_light.png">
+            <input [(ngModel)]="channelName" type="text" placeholder="z.B. Kooperationsprojekte">
+        </div>
+        <div class="error-message-container">
+            @if (showNameError && channelName.length < 3) { 
+                <p>
+                Der Channel-Name muss mindestens 3 Zeichen lang sein.
+                </p>
+            }
+            @if (showDuplicateError) {
+                <p>
+                    Dieser Channel-Name wird bereits verwendet! Bitte wähle einen anderen!
+                </p>
+            }
+        </div>
+    </div>
+    <div class="input-section">
+        <h3 class="project-font">Beschreibung <span>(optional)</span></h3>
+        <input [(ngModel)]="channelDescription" type="text" placeholder="Dein Text hier">
+    </div>
+    <div class="btn-section">
+        <button [ngClass]="{'btn-enabled': channelName.length >= 3, 'btn-disabled': channelName.length < 3}"
+            (click)="createChannel()">Erstellen</button>
+    </div>
+</div>

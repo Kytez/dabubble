@@ -1,0 +1,82 @@
+@import '../../../mixin.scss';
+@import '../../../font.scss';
+
+.open-thread {
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    margin: 20px 0;    
+    min-width: 410px;
+    width: 50%;
+    height: 100%;
+}
+
+.chat-history {
+    padding-top: 40px;
+}
+
+.thread-header {
+    @include flex-align-justify($jc: space-between);
+    padding: 32px 20px;
+    border-radius: 30px 30px 0 0;
+    box-shadow: 0px 2px 10px 0px #00000014;
+
+    .headline {
+        @include flex-align-justify();
+        gap: 5px;
+        h2 {
+            font-family: 'Nunito', sans-serif !important;
+            margin: 0;
+            @include font-size-weight-color($fs: 24px, $fw: 700);
+        }
+        span {
+            @include font-size-weight-color($fs: 14px, $cl: #797EF3)
+        }
+    }
+}
+
+.close-thread {
+    cursor: pointer;
+}
+
+.channel-history {
+    height: calc(100% - 96px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.separation-line {
+    width: 100%;
+    @include flex-align-justify();
+    gap: 20px;
+    padding: 10px 25px;
+
+    span {
+        @include font-size-weight-color($cl: #ADB0D9);
+        text-wrap: nowrap;
+    }
+
+    div {
+        height: 1px;
+        background-color: #ADB0D9;
+        width: 100%;
+    }
+}
+
+.channel-chat-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+app-full-thread-message {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+@media (max-width: 800px) {
+    .open-thread {
+        width: 100%;
+        min-width: unset;
+    }
+}

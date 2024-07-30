@@ -1,0 +1,54 @@
+<img class="logo" src="assets/img/dabubble_header_logo.png" alt="">
+<div class="go-to-register">
+    <span>Neu bei DABubble?</span>
+    <span class="link-to-register" [routerLink]="['/register']">Konto erstellen</span>
+</div>
+<div class="space"></div>
+<mat-card>
+    <mat-card-content>
+        <h1>Anmeldung</h1>
+        <span>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</span>
+        <form [formGroup]="loginData" (ngSubmit)="logIn($event)">
+            <div class="width-100">
+                <div class="input-errormessage">
+                    <div class="input-login">
+                        <mat-icon>mail_outline</mat-icon>
+                        <input formControlName="email" type="email" placeholder="beispielname@email.com">
+                    </div>
+                    <p [class.show-error-message]="logInFalse" class="hide-error-message">*Diese E-Mail-Adresse ist
+                        leider ungültig.</p>
+                </div>
+                <div class="input-errormessage">
+                    <div class="input-login">
+                        <mat-icon>lock_outline</mat-icon>
+                        <input formControlName="password" type="password" placeholder="Password">
+                    </div>
+                    <p [class.show-error-message]="logInFalse" class="hide-error-message">*Dieses Passwort ist leider
+                        ungültig.</p>
+                </div>
+
+                <a routerLink="/send-mail-to-reset">Passwort vergessen?</a>
+            </div>
+            <div class="border-line">
+                <div></div>
+                <span>ODER</span>
+                <div></div>
+            </div>
+
+            <button type="button" class="google-login-btn" (click)="authService.signInWidthGoogle()"><img
+                    src="assets/img/google.png" alt=""><span>Anmelden mit Google</span></button>
+
+            <div>
+            </div>
+            <div class="login-btn-field">
+                <button class="login-btn" type="submit">Anmelden</button>
+                <button class="guest-login-btn" type="button" (click)="guestLogin()">Gäste-Login</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
+
+<div class="space imprint-privacy">
+    <a [routerLink]="['/imprint']">Impressum</a>
+    <a [routerLink]="['/privacy']">Datenschutz</a>
+</div>

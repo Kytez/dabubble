@@ -1,0 +1,102 @@
+<mat-card class="channel-wrapper">
+  <mat-card-header>
+
+    <div class="channel-infos" *ngIf="currentChannel">
+      <div class="header-left-container" [matMenuTriggerFor]="editChannelMenu">
+        <div class="title"># {{ currentChannel.title }} </div>
+        <img class="title-arrow" src="assets/img/arrow_down.png">
+      </div>
+      <div class="header-right-container">
+        <div class="participants-container" [matMenuTriggerFor]="channelParticipantsMenu">
+          <div>
+            @for(participant of participantsImages; track participant.userId) {
+              <img class="participants-img" src="{{participant.participantImage}}" referrerpolicy="no-referrer">
+            }
+          </div>
+          <div class="participant-counter">{{ participantsImages.length }}</div>
+        </div>
+        <img class="addUser-btn" (click)="openAddUsersDialog()" src="assets/img/add_user.png">
+        <img class="showUser-btn" src="assets/img/add_user.png" [matMenuTriggerFor]="channelParticipantsMenu">
+      </div>
+    </div>
+
+    <!-- MatMenu EditChannel (Click on channel title)-->
+    <mat-menu #editChannelMenu>
+      <div (click)="$event.stopPropagation()">
+        <app-edit-channel *ngIf="currentChannel && currentUser && channelId" [currentChannel]="currentChannel"
+          [currentUser]="currentUser" [channelId]="channelId" [matMenuTrigger]="menuTrigger"></app-edit-channel>
+      </div>
+    </mat-menu>
+
+    <!-- MatMenu ChannelParticipants (Click on participants)-->
+    <mat-menu #channelParticipantsMenu class="channelParticipants">
+      <div (click)="$event.stopPropagation()">
+        <app-channel-participants *ngIf="currentChannel && users && currentUser" [currentChannel]="currentChannel"
+          [users]="users" [currentUser]="currentUser"></app-channel-participants>
+      </div>
+    </mat-menu>
+
+  </mat-card-header>
+
+  <!-- Channel history -->
+  <div #threadContainer class="chat-history" *ngIf="currentUser && groupedChannelThreads$">
+    <div *ngFor="let date of (groupedChannelThreads$ | async) | keyvalue">
+      
+      <div *ngIf="!(date.value.length == 0)" class="date-container">
+        <div class="date-line"></div>
+        <div class="date"> {{ dataService.formatDateForDisplay(date.key) }} </div>
+        <div class="date-line"></div>
+      </div>
+      <div *ngFor="let thread of date.value">
+        <app-channel-thread [thread]="thread.thread"></app-channel-thread> 
+      </div>
+    </div>
+  </div>
+
+  <!-- Channel Chat Input -->
+  <form [formGroup]="channelThreadMessage" class="text-box" *ngIf="currentChannel">
+    <div #imgBox class="add-file-img-box"></div>
+    <textarea #threadMessageBox required formControlName="channelMessage"
+      placeholder="Nachricht an #{{currentChannel.title}}"></textarea>
+    <div class="interactiv-btn-box">
+      <div class="interactive-btns">
+
+        <app-add-img-to-message [showImgRef]="imgBox"></app-add-img-to-message>
+
+        <div class="border-line"></div>
+        <app-emoji-mart [emojiImg]="'emoticon.png'" [emojiImgHover]="'emoticon-hover.png'"
+          [assigningComponent]="'ChannelChatComponent'"></app-emoji-mart>
+
+        <div class="address-message-to-user">
+          <img class="not-hover-icon" src="assets/img/ping-user.png" alt="">
+          <button class="hover-icon" mat-button [matMenuTriggerFor]="pingUser">
+            <img src="assets/img/ping-user-hover.png" alt="">
+          </button>
+          <mat-menu #pingUser="matMenu" class="address-message-to-user-menu">
+            <mat-form-field class="example-full-width" (click)="$event.stopPropagation()">
+              <mat-label>User</mat-label>
+              <input type="text" placeholder="Pick one" aria-label="User" matInput [formControl]="pingUserControl"
+                [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name"
+                  (click)="addUserToMessage(user)">
+                  &#64;{{ user.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </mat-menu>
+        </div>
+      </div>
+
+      <div class="send-message">
+        <button class="not-hover-icon">
+          <img src="assets/img/send-message.png" alt="">
+        </button>
+        <button type="submit" class="hover-icon" (click)="sendMessage(); removeChatInput()">
+          <img src="assets/img/send-message-hover.png" alt="">
+        </button>
+
+      </div>
+    </div>
+  </form>
+</mat-card>

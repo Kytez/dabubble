@@ -1,0 +1,136 @@
+<div class="open-thread">
+    <div class="thread-header">
+        <div class="headline">
+            <h2>Thread</h2>
+            <span># DevTeam</span>
+        </div>
+        <div class="close-thread" (click)="closeThread()">
+            <img src="assets/img/close.png" alt="">
+        </div>
+    </div>
+
+    <div class="channel-history" *ngIf="thread && thread.messages && thread.messages[0] && threadOwner">
+
+        <div #fullThreadContainer class="chat-history">
+            <div class="channel-chat-message" [class.other-users-channel-chat-message]="!isCurrentUser">
+                <div class="reaction-menu" *ngIf="isCurrentUser">
+                    <div class="icon" *ngIf="isCurrentUser">
+                        <img class="not-hover-icon" src="assets/img/dots.png" alt="">
+                        <button class="hover-icon" mat-button [matMenuTriggerFor]="editMessage">
+                            <img src="assets/img/dots-hover.png" alt="">
+                        </button>
+                        <mat-menu class="edit-message-btn" #editMessage="matMenu">
+                            <button mat-menu-item (click)="editThreadMessage(this.thread.messages[0])">Nachricht
+                                bearbeiten</button>
+                            <button class="delete-btn" mat-menu-item
+                                (click)="dataService.deleteThread(this.thread.threadId)">Nachricht löschen</button>
+                        </mat-menu>
+                    </div>
+                </div>
+
+                <div class="channel-chat-content">
+                    <div class="channel-chat-time-sender">
+                        <span>{{thread.getFormattedTimeStamp()}}</span>
+                        <h3>{{ threadOwner.name }}</h3>
+                    </div>
+
+
+                    <div class="message" *ngIf="!thread.messages[0].editMode">
+                        <img *ngIf="thread.messages[0].imgFileURL.length > 1 && !thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
+                            [src]="sanitizedUrl">
+                        <embed
+                            *ngIf="thread.messages[0].imgFileURL.length > 1 && thread.messages[0].imgFileURL.toLowerCase().includes('.pdf')"
+                            [src]="sanitizedUrl" />
+                        <div class="download-icon">
+                            <a *ngIf="thread.messages[0].imgFileURL.length > 1" [href]="sanitizedUrl" target="_blank"
+                                [download]="">
+                                <img src="assets/img/download-icon.png">
+                            </a>
+                        </div>
+                        <span>
+                            {{ thread.messages[0].content }}
+                        </span>
+                    </div>
+
+                    <div class="message-textarea" *ngIf="thread.messages[0].editMode">
+                        <div class="message-textarea-content">
+                            <div class="img-container" *ngIf="thread.messages[0].imgFileURL.length > 1">
+                                <img class="delete-icon" src="assets/img/close.png" alt=""
+                                    (click)="deleteImg(this.thread)">
+                                <img class="message-img" src="{{ thread.messages[0].imgFileURL }}" alt="">
+                            </div>
+                            <textarea #editFullThreadMessageBox>{{ thread.messages[0].content }}</textarea>
+                        </div>
+                        <div class="edit-message-btns">
+                            <span (click)="cancelEditMessage(this.thread.messages[0])">Abbrechen</span>
+                            <span (click)="saveEditMessage(this.thread)">Speichern</span>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="channel-chat-sender-img">
+                    <img src="{{ threadOwner.imageUrl }}" alt="" referrerpolicy="no-referrer">
+                </div>
+            </div>
+
+            <div class="separation-line">
+                <span>
+                    {{ thread.messages.length - 1 }} Antworten
+                </span>
+                <div></div>
+            </div>
+
+            <app-full-thread-message [thread]="thread" [currentUser]="currentUser"></app-full-thread-message>
+
+        </div>
+
+        <form [formGroup]="fullThreadMessage" class="text-box">
+            <div #imgBoxFullThread class="add-file-img-box"></div>
+            <textarea #fullThreadMessageBox formControlName="threadMessage" placeholder="Antworten"></textarea>
+            <div class="interactiv-btn-box">
+                <div class="interactive-btns">
+
+                    <app-add-img-to-message [showImgRef]="imgBoxFullThread"></app-add-img-to-message>
+
+                    <div class="border-line"></div>
+                    <app-emoji-mart [emojiImg]="'emoticon.png'" [emojiImgHover]="'emoticon-hover.png'"
+                        [assigningComponent]="'FullThreadComponent'"></app-emoji-mart>
+
+                    <div class="address-message-to-user">
+                        <img class="not-hover-icon" src="assets/img/ping-user.png" alt="">
+                        <button class="hover-icon" mat-button [matMenuTriggerFor]="pingUser">
+                            <img src="assets/img/ping-user-hover.png" alt="">
+                        </button>
+                        <mat-menu #pingUser="matMenu" class="address-message-to-user-menu">
+                            <mat-form-field class="example-full-width" (click)="$event.stopPropagation()">
+                                <mat-label>User</mat-label>
+                                <input type="text" placeholder="Pick one" aria-label="User" matInput
+                                    [formControl]="pingUserControlFullThread" [matAutocomplete]="auto">
+                                <mat-autocomplete #auto="matAutocomplete">
+                                    <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name"
+                                        (click)="addUserToMessage(user)">
+                                        &#64;{{ user.name }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
+                        </mat-menu>
+                    </div>
+                </div>
+
+
+                <div class="send-message">
+                    <button class="not-hover-icon">
+                        <img src="assets/img/send-message.png" alt="">
+                    </button>
+                    <button type="submit" class="hover-icon" (click)="sendMessage(); removeChatInput()">
+                        <img src="assets/img/send-message-hover.png" alt="">
+                    </button>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

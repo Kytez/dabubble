@@ -1,0 +1,16 @@
+<div class="photo-upload-container">
+  <img alt="Image" class="logo" src="assets/img/logo-complete-black.png">
+
+  <app-photo-selection
+    [showBackArrow]="true"
+    [showClose]="false"
+    [onNext]="onRegistrationFinished.bind(this)"
+    (selectedImg)="handleImage($event)"
+  />
+
+  <div class="footer-links">
+    <a [routerLink]="['/imprint']">Impressum</a>
+    <a [routerLink]="['/privacy']">Datenschutz</a>
+  </div>
+
+</div>

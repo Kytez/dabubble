@@ -1,0 +1,178 @@
+@import './../../../mixin.scss';
+
+.participant-profile {
+    display: flex;
+    flex-direction: column;
+    padding: 45px;
+    width: 480px;
+    height: 650px;
+
+    .title-and-closeButton {
+        @include flex-align-justify($jc: space-between);
+        
+
+        h2 {
+            @include font-size-weight-color($fs: 25px, $fw: 500);
+        } 
+
+        div {
+            cursor: pointer;
+            margin-bottom: 2px;
+
+            &:hover {
+                content: url(./../../../assets/img/close_hover.png);
+                margin-bottom: 8px;
+            }
+        }
+    }
+
+    .image-container {
+        @include flex-align-justify();
+        padding: 25px;
+
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+        }
+    }
+
+    .participant-name {
+        @include flex-align-justify($jc: start);
+        @include font-size-weight-color($fs: 29px, $fw: 700);
+        margin-top: 40px;
+    }
+
+    .status-container {
+        @include flex-align-justify($jc: start);
+        margin-top: 20px;
+
+        .status-inner-container {
+            @include flex-align-justify();
+
+            .status-color {
+                width: 26px;
+                height: 26px;
+                border-radius: 50%;
+            }
+
+            .status {
+                margin-left: 20px;
+                @include font-size-weight-color($fs: 21px, $fw: 500);
+            }
+        }
+    }
+
+    .email-container {
+        @include flex-align-justify($jc: start);
+        margin-top: 20px;
+
+        .email-inner-container {
+            @include flex-align-justify();
+
+            .email {
+                margin-left: 18px;
+                @include font-size-weight-color($fw: 600);
+            }
+        }
+    }
+
+    .email-adress {
+        margin-top: 20px;
+        text-align: center;
+
+        a {
+            text-decoration: none;
+            @include font-size-weight-color($fs: 21px, $fw: 600, $cl: rgb(76, 107, 241));
+            &:focus-visible {
+                outline: unset;
+            }
+        }
+    }
+
+    .button-container {
+        @include flex-align-justify();
+        margin-top: 40px;
+
+        button {
+            @include flex-align-justify();
+            @include font-size-weight-color($fs: 21px, $cl: white);
+            border: none;
+            background-color: $purple;
+            border-radius: 30px;
+            padding: 8px 21px;
+
+            img {
+                filter: invert(1);
+                margin-right: 12px;
+            }
+
+            &:hover {
+                cursor: pointer;
+                background-color: $fontHover;
+            }
+        }
+    }
+}
+
+.online {
+    content: url('./../../../assets/img/online.png');
+}
+
+.offline {
+    content: url('./../../../assets/img/offline.png');
+}
+
+
+
+
+@media(max-width: 850px) {
+    .participant-profile {
+        padding: 40px;
+        width: 380px;
+        height: 615px;
+    }
+}
+
+
+@media(max-width: 500px) {
+    .participant-profile {
+        padding: 20px; 
+        width: 340px;
+    }
+}
+
+
+@media(max-width: 440px) {
+    .participant-profile {
+        width: 310px;
+
+        .participant-name {
+            @include font-size-weight-color($fs: 26px, $fw: 700); 
+        }
+
+        .email-adress {
+            a {
+                @include font-size-weight-color($fs: 19px, $fw: 600, $cl: rgb(76, 107, 241));
+            }
+        }
+    }
+}
+
+@media(max-width: 400px) {
+    .participant-profile {
+        padding: 12px;
+        width: 250px;
+
+        .participant-name {
+            @include font-size-weight-color($fs: 23px, $fw: 700); 
+        }
+
+        .email-adress {
+            a {
+                @include font-size-weight-color($fs: 17px, $fw: 600, $cl: rgb(76, 107, 241));
+            }
+        }
+    }
+}
+

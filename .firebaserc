@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "da-bubble-f792a": {
+      "hosting": {
+        "dabubble": [
+          "da-bubble-f792a"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "da-bubble-f792a"
+  }
+}
